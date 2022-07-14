@@ -14,12 +14,20 @@ class Configuration:
         config_file_path:str = CONFG_FILE_PATH,
         current_time_stamp:str =CURRENT_TIME_STAMP
         ) -> None:
-        self.config_info = read_yaml_file(config_file_path)
-        self.training_pipeline_config = self.get_training_pipeline_config()
-        self.time_stamp = current_time_stamp
+        try:
+            self.config_info = read_yaml_file(config_file_path)
+            self.training_pipeline_config = self.get_training_pipeline_config()
+            self.time_stamp = current_time_stamp
+
+        except Exception as e:
+            raise HousingException(e,sys) from e
+
 
     def get_data_ingestion_config(self)->DataIngestionConfig:
-        pass
+        try:
+            self.config_info
+        except Exception as e:
+            raise HousingException(e,sys) from e
 
     def get_data_validation_config(self)->DataValidationConfig:
         pass
